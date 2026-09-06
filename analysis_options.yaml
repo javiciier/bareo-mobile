@@ -1,0 +1,32 @@
+# https://dart.dev/guides/language/analysis-options
+# Invoke from the command line by running `flutter analyze`.
+
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - .idea
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+
+linter:
+  rules:
+    - file_names
+    - package_names
+    - library_names
+    - prefer_single_quotes
+    - unawaited_futures
+    - avoid_print
+    - prefer_const_constructors
+    - prefer_const_literals_to_create_immutables
+    - require_trailing_commas
+
+    # UI performance rules
+    - sized_box_for_whitespace
+    - use_colored_box
+    - use_decorated_box

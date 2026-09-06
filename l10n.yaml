@@ -1,0 +1,11 @@
+arb-dir: i18n
+output-dir: lib/app/i18n/translations
+format: true
+nullable-getter: false
+output-class: AppLocalizations
+output-localization-file: app_localizations.dart
+preferred-supported-locales: [ es, en ]
+template-arb-file: app_es.arb
+untranslated-messages-file: i18n/untranslated_messages.json
+use-escaping: true
+use-named-parameters: true
