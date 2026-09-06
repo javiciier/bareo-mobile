@@ -1,5 +1,11 @@
-import 'package:bareo_mobile/app/configuration/localization.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import '../presentation/route/routes.dart';
+import 'configuration/environment.dart';
+import 'configuration/localization.dart';
+import 'theme/theme.dart';
 
 class BareoApp extends StatelessWidget {
   const BareoApp({super.key});
@@ -7,20 +13,12 @@ class BareoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bareo',
+      title: ENV.appName,
       localizationsDelegates: LocalizationConfiguration.localizationsDelegates,
       supportedLocales: LocalizationConfiguration.supportedLocales,
-      theme: getApplicationTheme(),
-      home: buildHome(),
+      theme: buildApplicationTheme(),
+      initialRoute: applicationInitialRoute,
+      routes: getApplicationRoutes(),
     );
   }
-
-  ThemeData getApplicationTheme() {
-    return ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      useMaterial3: true,
-    );
-  }
-
-  Scaffold buildHome() => const Scaffold(body: Center(child: Text('Bareo')));
 }

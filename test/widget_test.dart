@@ -5,13 +5,16 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:bareo_mobile/app/app.dart';
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
+import 'package:bareo_mobile/app/app.dart';
 
 void main() {
   testWidgets('Main page is rendered', (WidgetTester tester) async {
     await tester.pumpWidget(const BareoApp());
 
-    expect(find.text('Bareo mobile'), findsOneWidget);
+    expect(find.text('Bareo'), findsOneWidget);
   });
 }

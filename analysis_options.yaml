@@ -16,17 +16,73 @@ analyzer:
 
 linter:
   rules:
-    - file_names
-    - package_names
-    - library_names
-    - prefer_single_quotes
-    - unawaited_futures
+    - # https://dart.dev/tools/linter-rules#rules
+    - avoid_empty_else
+    - avoid_relative_lib_imports
+    - avoid_renaming_method_parameters
+    - avoid_return_types_on_setters
+    - avoid_returning_null_for_void
+    - avoid_shadowing_type_parameters
+    - avoid_types_as_parameter_names
     - avoid_print
+    - avoid_unnecessary_containers
+    - avoid_web_libraries_in_flutter
+    - await_only_futures
+    - camel_case_types
+    - curly_braces_in_flow_control_structures
+    - depend_on_referenced_packages
+    - empty_catches
+    - empty_constructor_bodies
+    - empty_statements
+    - exhaustive_cases
+    - file_names
+    - library_names
+    - library_prefixes
+    - library_private_types_in_public_api
+    - no_duplicate_case_values
+    - no_leading_underscores_for_library_prefixes
+    - no_leading_underscores_for_local_identifiers
+    - no_logic_in_create_state
+    - non_constant_identifier_names
+    - null_check_on_nullable_type_parameter
+    - null_closures
+    - overridden_fields
+    - package_names
+    - prefer_adjacent_string_concatenation
+    - prefer_conditional_assignment
     - prefer_const_constructors
     - prefer_const_literals_to_create_immutables
+    - prefer_for_elements_to_map_fromIterable
+    - prefer_if_null_operators
+    - prefer_interpolation_to_compose_strings
+    - prefer_is_not_operator
+    - prefer_contains
+    - prefer_relative_imports
+    - prefer_single_quotes
+    - prefer_spread_collections
+    - provide_deprecation_message
+    - recursive_getters
     - require_trailing_commas
-
-    # UI performance rules
+    - secure_pubspec_urls
     - sized_box_for_whitespace
+    - slash_for_doc_comments
+    - unawaited_futures
+    - unnecessary_brace_in_string_interps
+    - unnecessary_const
+    - unnecessary_constructor_name
+    - unnecessary_late
+    - unnecessary_new
+    - unnecessary_null_aware_assignments
+    - unnecessary_null_in_if_null_operators
+    - unnecessary_overrides
+    - unnecessary_string_interpolations
+    - unnecessary_to_list_in_spreads
+    - unnecessary_this
+    - unnecessary_underscores
+    - unrelated_type_equality_checks
     - use_colored_box
+    - use_function_type_syntax_for_parameters
+    - use_null_aware_elements
+    - use_rethrow_when_possible
     - use_decorated_box
+    - valid_regexps
