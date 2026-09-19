@@ -55,3 +55,11 @@ app.*.map.json
 *.env
 *.pem
 *.cert
+
+# Firebase configuration files
+firebase.json
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
+/lib/infrastructure/thirdparty/firebase/firebase_options.dart
