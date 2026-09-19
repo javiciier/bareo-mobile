@@ -16,6 +16,10 @@ echo
 bash "$GIT_SCRIPTS_PATH/setup_git_conventional_commits.sh"
 echo
 
+# Configure environment and third-party APIs
+bash "$SCRIPTS_PATH/config/firebase_environment.sh"
+echo
+
 # Build project
 bash "$BUILD_SCRIPTS_PATH/build_project.sh"
 echo

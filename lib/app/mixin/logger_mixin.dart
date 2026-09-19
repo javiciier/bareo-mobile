@@ -6,8 +6,10 @@
  */
 
 // Package imports:
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:logging/logging.dart';
 
-class ENV {
-  static String get appName => dotenv.get('APP_NAME', fallback: 'Bareo');
+/// Mixin to inject loggers into classes.
+/// Usage: class MyClass with LoggerMixin {}
+mixin LoggerMixin {
+  late final Logger logger = Logger('$runtimeType');
 }
