@@ -1,4 +1,9 @@
-// Flutter imports:
+/*
+ * Copyright (c) 2026 Bareo. All rights reserved.
+ *
+ * This software is the proprietary and confidential property of the author.
+ * Unauthorized copying, distribution, or use is strictly prohibited.
+ */
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -9,7 +14,10 @@ import 'package:dio/dio.dart';
 class DioClient {
   late final Dio _dio;
 
-  DioClient({required String baseUrl, String? token}) {
+  DioClient({
+    required String baseUrl,
+    Future<String?> Function()? tokenProvider,
+  }) {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
@@ -18,10 +26,28 @@ class DioClient {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          if (token != null) 'Authorization': 'Bearer $token',
         },
       ),
     );
+
+    // Interceptor will inyect the Bearer Token dynamically in each request
+    if (tokenProvider != null) {
+      _dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) async {
+            try {
+              final token = await tokenProvider();
+              if (token != null) {
+                options.headers['Authorization'] = 'Bearer $token';
+              }
+            } catch (_) {
+              // Token not available, pass the request without Bearer
+            }
+            return handler.next(options);
+          },
+        ),
+      );
+    }
 
     if (kDebugMode) {
       _dio.interceptors.add(

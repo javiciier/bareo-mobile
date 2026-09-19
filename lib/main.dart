@@ -1,7 +1,15 @@
+/*
+ * Copyright (c) 2026 Bareo. All rights reserved.
+ *
+ * This software is the proprietary and confidential property of the author.
+ * Unauthorized copying, distribution, or use is strictly prohibited.
+ */
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:logging/logging.dart';
@@ -13,6 +21,7 @@ import 'app/configuration/dependency_injection.dart';
 import 'app/configuration/logging.dart';
 import 'app/state/application_root_state.dart';
 import 'app/state/redux_configuration.dart';
+import 'infrastructure/thirdparty/firebase/firebase_options.dart';
 
 Logger _logger = Logger('Main');
 
@@ -32,7 +41,11 @@ Future<void> main() async {
 
 Future<void> setupGlobalConfiguration() async {
   _logger.config('Setting up global application configuration');
-  setupLoggers();
+
   await dotenv.load();
-  setupDependencyInjections();
+  setupLoggers();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await setupDependencyInjections();
 }
