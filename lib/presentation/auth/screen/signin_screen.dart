@@ -9,19 +9,19 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 // Project imports:
 import '../../../app/configuration/dependency_injection.dart';
 import '../../../app/configuration/environment.dart';
 import '../../../infrastructure/thirdparty/firebase/firebase_service.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+class SignInPage extends StatelessWidget {
+  const SignInPage({super.key});
 
   void _loginWithGoogle() async {
     FirebaseService firebaseService = di.get<FirebaseService>();
-    User? user = await firebaseService.loginWithGoogle();
+    firebaseService.signInwithGoogle();
   }
 
   @override
@@ -32,9 +32,13 @@ class WelcomeScreen extends StatelessWidget {
           mainAxisAlignment: .center,
           children: [
             Center(child: Text(ENV.appName)),
-            ElevatedButton(
-              onPressed: () => _loginWithGoogle(),
-              child: const Text('Login with Google'),
+            const Divider(),
+            SignInButton(
+              Buttons.google,
+              onPressed: () {
+                _loginWithGoogle();
+                Navigator.pushNamed(context, '/auth');
+              },
             ),
           ],
         ),

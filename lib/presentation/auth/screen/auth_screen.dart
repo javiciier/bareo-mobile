@@ -13,18 +13,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 // Project imports:
 import '../../../app/mixin/logger_mixin.dart';
-import 'initial_screen.dart';
+import 'home_screen.dart';
+import 'signin_screen.dart';
 
 /// Screen that decides if the user is logged in or not.
-class AuthenticationScreen extends StatefulWidget {
-  const AuthenticationScreen({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthenticationScreenState extends State<AuthenticationScreen>
-    with LoggerMixin {
+class _AuthScreenState extends State<AuthScreen> with LoggerMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,22 +34,17 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasData) {
-            return Column(
-              mainAxisAlignment: .center,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      const Text('Bienvenido'),
-                      Text('${snapshot.data?.displayName}'),
-                    ],
-                  ),
-                ),
-              ],
-            );
+          if (snapshot.hasError) {
+            return const Center(child: Text('No se ha podido iniciar sesión'));
           }
-          return const WelcomeScreen();
+
+          // User is logged in
+          if (snapshot.hasData && snapshot.data != null) {
+            return const HomeScreen();
+          }
+
+          // No user is logged in: go to sign in page
+          return const SignInPage();
         },
       ),
     );

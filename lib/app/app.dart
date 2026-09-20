@@ -14,6 +14,8 @@ import 'configuration/environment.dart';
 import 'configuration/localization.dart';
 import 'theme/theme.dart';
 
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class BareoApp extends StatelessWidget {
   const BareoApp({super.key});
 
@@ -21,9 +23,12 @@ class BareoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: ENV.appName,
+      debugShowCheckedModeBanner: true,
+      // debugShowMaterialGrid: true,
       localizationsDelegates: LocalizationConfiguration.localizationsDelegates,
       supportedLocales: LocalizationConfiguration.supportedLocales,
       theme: buildApplicationTheme(),
+      navigatorKey: navigatorKey,
       initialRoute: applicationInitialRoute,
       routes: getApplicationRoutes(),
     );
