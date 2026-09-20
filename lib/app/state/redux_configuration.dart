@@ -7,6 +7,7 @@
 
 // Package imports:
 import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
 // Project imports:
@@ -26,5 +27,6 @@ List<Middleware<ApplicationRootState>> configureMiddlewares() {
     // (store, action, next) => thunkMiddleware(store, action, next),
     thunkMiddleware,
     ...createLoggingMiddleware(),
+    LoggingMiddleware.printer().call,
   ];
 }

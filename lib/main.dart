@@ -41,7 +41,6 @@ Future<void> main() async {
 
 Future<void> setupGlobalConfiguration() async {
   _logger.config('Setting up global application configuration');
-
   await dotenv.load();
   setupLoggers();
 
