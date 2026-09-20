@@ -46,7 +46,7 @@ class FirebaseService with LoggerMixin {
   }
 
   /// Sign in user using Google account
-  Future<User?> loginWithGoogle() async {
+  Future<User?> signInwithGoogle() async {
     try {
       await _ensureGoogleSignInInitialized();
       // Open accounts selector and wait for user selection
