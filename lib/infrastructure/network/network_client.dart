@@ -5,22 +5,22 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:dio/dio.dart';
 
-class DioClient {
+// Project imports:
+import '../../app/configuration/environment.dart';
+import '../../app/mixin/logger_mixin.dart';
+import 'interceptors/request_logger_interceptor.dart';
+import 'interceptors/token_interceptor.dart';
+
+class NetworkClient with LoggerMixin {
   late final Dio _dio;
 
-  DioClient({
-    required String baseUrl,
-    Future<String?> Function()? tokenProvider,
-  }) {
+  NetworkClient({String? baseUrl}) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: baseUrl,
+        baseUrl: baseUrl ?? ENV.BASE_URL,
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
         headers: {
@@ -28,36 +28,7 @@ class DioClient {
           'Accept': 'application/json',
         },
       ),
-    );
-
-    // Interceptor will inyect the Bearer Token dynamically in each request
-    if (tokenProvider != null) {
-      _dio.interceptors.add(
-        InterceptorsWrapper(
-          onRequest: (options, handler) async {
-            try {
-              final token = await tokenProvider();
-              if (token != null) {
-                options.headers['Authorization'] = 'Bearer $token';
-              }
-            } catch (_) {
-              // Token not available, pass the request without Bearer
-            }
-            return handler.next(options);
-          },
-        ),
-      );
-    }
-
-    if (kDebugMode) {
-      _dio.interceptors.add(
-        LogInterceptor(
-          requestBody: true,
-          responseBody: true,
-          logPrint: (object) => debugPrint(object.toString()),
-        ),
-      );
-    }
+    )..interceptors.addAll([TokenInterceptor, RequestLoggerInterceptor]);
   }
 
   Future<void> get(
