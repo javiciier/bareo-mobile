@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import '../../../app/configuration/dependency_injection.dart';
 import '../../../infrastructure/thirdparty/firebase/firebase_service.dart';
 import '../../common/widget/page_template.dart';
-import '../widget/home_header.dart';
 
 class HomePage extends StatelessWidget {
   static final String routeName = '/home';
@@ -32,7 +31,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: .center,
           children: [
-            const HomeHeader(),
             ElevatedButton(
               onPressed: () => _logoutWithGoogle(),
               child: const Text('Cerrar sesión'),

@@ -22,7 +22,7 @@ class BareoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: ENV.appName,
+      title: ENV.APP_NAME,
       debugShowCheckedModeBanner: true,
       // debugShowMaterialGrid: true,
       localizationsDelegates: LocalizationConfiguration.localizationsDelegates,
