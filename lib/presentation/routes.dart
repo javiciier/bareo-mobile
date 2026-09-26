@@ -9,12 +9,12 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'auth/screen/auth_screen.dart';
-import 'auth/screen/home_screen.dart';
+import 'auth/page/auth_page.dart';
+import 'home/page/home_page.dart';
 
 const String applicationInitialRoute = '/auth';
 
 Map<String, WidgetBuilder> getApplicationRoutes() => {
-  applicationInitialRoute: (context) => const AuthScreen(),
-  '/home': (context) => const HomeScreen(),
+  applicationInitialRoute: (context) => const AuthPage(),
+  HomePage.routeName: (context) => const HomePage(),
 };
