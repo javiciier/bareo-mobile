@@ -13,18 +13,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 // Project imports:
 import '../../../app/mixin/logger_mixin.dart';
-import 'home_screen.dart';
-import 'signin_screen.dart';
+import '../../home/page/home_page.dart';
+import 'signin_page.dart';
 
 /// Screen that decides if the user is logged in or not.
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+class AuthPage extends StatefulWidget {
+  const AuthPage({super.key});
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  State<AuthPage> createState() => _AuthPageState();
 }
 
-class _AuthScreenState extends State<AuthScreen> with LoggerMixin {
+class _AuthPageState extends State<AuthPage> with LoggerMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +40,7 @@ class _AuthScreenState extends State<AuthScreen> with LoggerMixin {
 
           // User is logged in
           if (snapshot.hasData && snapshot.data != null) {
-            return const HomeScreen();
+            return const HomePage();
           }
 
           // No user is logged in: go to sign in page
