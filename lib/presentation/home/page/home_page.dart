@@ -8,37 +8,34 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:sign_in_button/sign_in_button.dart';
-
 // Project imports:
 import '../../../app/configuration/dependency_injection.dart';
-import '../../../app/configuration/environment.dart';
 import '../../../infrastructure/thirdparty/firebase/firebase_service.dart';
+import '../../common/widget/page_template.dart';
+import '../widget/home_header.dart';
 
-class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+class HomePage extends StatelessWidget {
+  static final String routeName = '/home';
 
-  void _loginWithGoogle() async {
+  const HomePage({super.key});
+
+  void _logoutWithGoogle() async {
     FirebaseService firebaseService = di.get<FirebaseService>();
-    firebaseService.signInwithGoogle();
+    await firebaseService.signOutFromGoogle();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return PageTemplate(
+      title: 'Home Page',
+      child: Center(
         child: Column(
           mainAxisAlignment: .center,
           children: [
-            Center(child: Text(ENV.appName)),
-            const Divider(),
-            SignInButton(
-              Buttons.google,
-              onPressed: () {
-                _loginWithGoogle();
-                Navigator.pushNamed(context, '/auth');
-              },
+            const HomeHeader(),
+            ElevatedButton(
+              onPressed: () => _logoutWithGoogle(),
+              child: const Text('Cerrar sesión'),
             ),
           ],
         ),
