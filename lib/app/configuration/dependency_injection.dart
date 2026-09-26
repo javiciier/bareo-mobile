@@ -9,6 +9,7 @@
 import 'package:get_it/get_it.dart';
 
 // Project imports:
+import '../../infrastructure/network/network_client.dart';
 import '../../infrastructure/thirdparty/firebase/firebase_service.dart';
 
 final di = GetIt.instance;
@@ -21,7 +22,9 @@ Future<void> setupDependencyInjections() async {
   _registerPresentationDependencies();
 }
 
-void _initializeDependencies() async {}
+void _initializeDependencies() async {
+  di.registerLazySingleton<NetworkClient>(() => NetworkClient());
+}
 
 void _registerRepositoriesDependencies() {}
 

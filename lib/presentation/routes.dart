@@ -12,9 +12,9 @@ import 'package:flutter/material.dart';
 import 'auth/page/auth_page.dart';
 import 'home/page/home_page.dart';
 
-const String applicationInitialRoute = '/auth';
+final String applicationInitialRoute = AuthPage.routeName;
 
 Map<String, WidgetBuilder> getApplicationRoutes() => {
-  applicationInitialRoute: (context) => const AuthPage(),
+  AuthPage.routeName: (context) => const AuthPage(),
   HomePage.routeName: (context) => const HomePage(),
 };

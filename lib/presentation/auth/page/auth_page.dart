@@ -18,6 +18,8 @@ import 'signin_page.dart';
 
 /// Screen that decides if the user is logged in or not.
 class AuthPage extends StatefulWidget {
+  static final String routeName = '/home';
+
   const AuthPage({super.key});
 
   @override

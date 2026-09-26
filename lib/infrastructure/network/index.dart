@@ -5,4 +5,4 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
-export './backendClient.dart';
+export './network_client.dart';

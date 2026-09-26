@@ -28,7 +28,7 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-      title: ENV.appName,
+      title: ENV.APP_NAME,
       child: Column(
         mainAxisAlignment: .center,
         children: [

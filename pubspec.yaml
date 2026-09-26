@@ -41,11 +41,18 @@ dependencies:
   # Visual components
   sign_in_button: ^5.0.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # Compilation and language support
   flutter_lints: ^6.0.0
   import_sorter: ^4.6.0
+
+  # Network
+  pretty_dio_clean_logger: ^1.0.2
+
 
 flutter:
   uses-material-design: true
