@@ -8,15 +8,16 @@
 // Flutter imports:
 import 'package:flutter/widgets.dart';
 
+// Project imports:
+import '../../../app/configuration/environment.dart';
+
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+  final String _title;
+
+  HomeHeader({super.key, String? title}) : _title = title ?? ENV.APP_NAME;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Row(children: [Text('home header')]),
-      ],
-    );
+    return Row(children: [Text(_title)]);
   }
 }

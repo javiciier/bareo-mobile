@@ -9,12 +9,17 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// Project imports:
+import '../../../app/configuration/dependency_injection.dart';
+import '../../thirdparty/firebase/firebase_service.dart';
+
+FirebaseService firebaseService = DEPENDENCIES_CONTAINER.get<FirebaseService>();
+
 // Interceptor that inyects the Bearer Token from Firebase for each network request
 Interceptor TokenInterceptor = InterceptorsWrapper(
   onRequest: (options, handler) async {
-    final firebaseToken = await FirebaseAuth.instance.currentUser?.getIdToken(
-      true,
-    );
+    User? currentUser = await firebaseService.getCurrentLoggedInUser();
+    String? firebaseToken = await currentUser?.getIdToken(true);
     options.headers['Authorization'] = 'Bearer $firebaseToken';
 
     return handler.next(options);

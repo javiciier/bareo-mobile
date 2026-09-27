@@ -8,26 +8,40 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
+import '../widget/page_header_template.dart';
+
 class PageTemplate extends StatelessWidget {
+  final PageHeader? header;
   final Widget child;
-  final String? title;
+  final Widget? footer;
   final Widget? floatingActionButton;
 
   const PageTemplate({
     super.key,
+    this.header,
     required this.child,
-    this.title,
+    this.footer,
     this.floatingActionButton,
   });
 
   @override
   Widget build(BuildContext context) {
+    EdgeInsets padding = const EdgeInsets.symmetric(
+      horizontal: 16.0,
+      vertical: 12.0,
+    );
+
     return Scaffold(
-      appBar: title != null ? AppBar(title: Text(title!)) : null,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-          child: child,
+        child: Column(
+          children: [
+            ?header,
+            Expanded(
+              child: Padding(padding: padding, child: child),
+            ),
+            ?footer,
+          ],
         ),
       ),
       floatingActionButton: floatingActionButton,

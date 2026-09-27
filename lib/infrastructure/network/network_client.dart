@@ -12,23 +12,30 @@ import 'package:dio/dio.dart';
 import '../../app/configuration/environment.dart';
 import '../../app/mixin/logger_mixin.dart';
 import 'interceptors/request_logger_interceptor.dart';
+import 'interceptors/request_traceability_interceptor.dart';
 import 'interceptors/token_interceptor.dart';
 
 class NetworkClient with LoggerMixin {
   late final Dio _dio;
 
   NetworkClient({String? baseUrl}) {
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: baseUrl ?? ENV.BASE_URL,
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 15),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      ),
-    )..interceptors.addAll([TokenInterceptor, RequestLoggerInterceptor]);
+    _dio =
+        Dio(
+            BaseOptions(
+              baseUrl: baseUrl ?? ENV.BASE_URL,
+              connectTimeout: const Duration(seconds: 15),
+              receiveTimeout: const Duration(seconds: 15),
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+              },
+            ),
+          )
+          ..interceptors.addAll([
+            TokenInterceptor,
+            RequestTraceabilityInterceptor,
+            RequestLoggerInterceptor,
+          ]);
   }
 
   Future<void> get(

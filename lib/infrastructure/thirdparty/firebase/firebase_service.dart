@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 // Project imports:
+import '../../../app/configuration/environment.dart';
 import '../../../app/mixin/logger_mixin.dart';
 import 'google_application_scopes.dart';
 
@@ -24,13 +25,17 @@ class FirebaseService with LoggerMixin {
     _initializeGoogleSignIn();
   }
 
+  FirebaseAuth get firebaseAuth => _firebaseAuth;
+
   Future<void> _initializeGoogleSignIn() async {
     if (_isGoogleSignInInitialized) {
       return;
     }
 
     try {
-      await _googleSignIn.initialize();
+      await _googleSignIn.initialize(
+        serverClientId: ENV.GOOGLE_SERVER_CLIENT_ID,
+      );
       _isGoogleSignInInitialized = true;
     } catch (e) {
       logger.severe('Error initializing Google Sign-In: $e');
@@ -49,6 +54,12 @@ class FirebaseService with LoggerMixin {
   Future<User?> signInwithGoogle() async {
     try {
       await _ensureGoogleSignInInitialized();
+
+      // Clear stale Google Sign-In session state if any exists
+      try {
+        await _googleSignIn.signOut();
+      } catch (_) {}
+
       // Open accounts selector and wait for user selection
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
 
@@ -77,6 +88,15 @@ class FirebaseService with LoggerMixin {
       return userCredential.user;
     } catch (e, stackTrace) {
       logger.severe('Error logging in with Google', e, stackTrace);
+      return null;
+    }
+  }
+
+  /// Get the current loged in user
+  Future<User?> getCurrentLoggedInUser() async {
+    try {
+      return _firebaseAuth.currentUser;
+    } catch (e) {
       return null;
     }
   }

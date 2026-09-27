@@ -13,4 +13,9 @@ class ENV {
 
   static String get BASE_URL =>
       dotenv.get('API_BASE_URL', fallback: 'http://localhost:8080/api');
+
+  static String get GOOGLE_SERVER_CLIENT_ID => dotenv.get(
+    'GOOGLE_SERVER_CLIENT_ID',
+    fallback: '216630720184-66rmvjju72134h8egdii3tck1suvr0nr.apps.googleusercontent.com',
+  );
 }
