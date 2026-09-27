@@ -86,3 +86,4 @@ linter:
     - use_rethrow_when_possible
     - use_decorated_box
     - valid_regexps
+    - var_with_no_type_annotation

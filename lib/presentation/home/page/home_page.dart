@@ -8,34 +8,29 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:firebase_auth/firebase_auth.dart';
+
 // Project imports:
-import '../../../app/configuration/dependency_injection.dart';
-import '../../../infrastructure/thirdparty/firebase/firebase_service.dart';
-import '../../common/widget/page_template.dart';
+import '../../../app/configuration/environment.dart';
+import '../../common/page/page_template.dart';
+import '../../common/widget/page_header_template.dart';
 
 class HomePage extends StatelessWidget {
   static final String routeName = '/home';
 
   const HomePage({super.key});
 
-  void _logoutWithGoogle() async {
-    FirebaseService firebaseService = di.get<FirebaseService>();
-    await firebaseService.signOutFromGoogle();
-  }
-
   @override
   Widget build(BuildContext context) {
+    String? userDisplayName = FirebaseAuth.instance.currentUser?.displayName;
+
     return PageTemplate(
-      title: 'Home Page',
+      header: PageHeader(title: ENV.APP_NAME),
       child: Center(
         child: Column(
           mainAxisAlignment: .center,
-          children: [
-            ElevatedButton(
-              onPressed: () => _logoutWithGoogle(),
-              child: const Text('Cerrar sesión'),
-            ),
-          ],
+          children: [Text('Hola, $userDisplayName')],
         ),
       ),
     );

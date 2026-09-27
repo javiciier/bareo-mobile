@@ -8,6 +8,7 @@
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uuid/uuid.dart';
 
 // Project imports:
 import '../../../app/configuration/dependency_injection.dart';
@@ -15,13 +16,14 @@ import '../../thirdparty/firebase/firebase_service.dart';
 
 FirebaseService firebaseService = DEPENDENCIES_CONTAINER.get<FirebaseService>();
 
-// Interceptor that inyects the Bearer Token from Firebase for each network request
-Interceptor TokenInterceptor = InterceptorsWrapper(
+// Interceptor that configures the Request headers to enable traceability of user actions
+Interceptor RequestTraceabilityInterceptor = InterceptorsWrapper(
   onRequest: (options, handler) async {
     User? currentUser = await firebaseService.getCurrentLoggedInUser();
     String? firebaseToken = await currentUser?.getIdToken(true);
-    options.headers['Authorization'] = 'Bearer $firebaseToken';
+    String requestId = const Uuid().v7();
 
-    return handler.next(options);
+    options.headers['userId'] = firebaseToken;
+    options.headers['X-Request-Id'] = requestId;
   },
 );

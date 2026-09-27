@@ -18,7 +18,7 @@ import 'signin_page.dart';
 
 /// Screen that decides if the user is logged in or not.
 class AuthPage extends StatefulWidget {
-  static final String routeName = '/home';
+  static final String routeName = '/auth';
 
   const AuthPage({super.key});
 
@@ -36,9 +36,6 @@ class _AuthPageState extends State<AuthPage> with LoggerMixin {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasError) {
-            return const Center(child: Text('No se ha podido iniciar sesión'));
-          }
 
           // User is logged in
           if (snapshot.hasData && snapshot.data != null) {
@@ -46,7 +43,7 @@ class _AuthPageState extends State<AuthPage> with LoggerMixin {
           }
 
           // No user is logged in: go to sign in page
-          return const SignInPage();
+          return SignInPage();
         },
       ),
     );

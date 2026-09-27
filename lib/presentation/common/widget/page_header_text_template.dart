@@ -8,16 +8,13 @@
 // Flutter imports:
 import 'package:flutter/widgets.dart';
 
-// Project imports:
-import '../../../app/configuration/environment.dart';
+class PageHeaderText extends StatelessWidget {
+  final String? text;
 
-class HomeHeader extends StatelessWidget {
-  final String _title;
-
-  HomeHeader({super.key, String? title}) : _title = title ?? ENV.APP_NAME;
+  const PageHeaderText({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [Text(_title)]);
+    return Text(text ?? '', style: const TextStyle(fontWeight: .bold));
   }
 }
