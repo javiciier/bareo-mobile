@@ -28,10 +28,7 @@ class HomePage extends StatelessWidget {
     return PageTemplate(
       header: PageHeader(title: ENV.APP_NAME),
       child: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [Text('Hola, $userDisplayName')],
-        ),
+        child: Column(mainAxisAlignment: .center, children: [Text('Hola, $userDisplayName')]),
       ),
     );
   }

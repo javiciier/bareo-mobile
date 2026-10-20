@@ -11,8 +11,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class ENV {
   static String get APP_NAME => dotenv.get('APP_NAME', fallback: 'Bareo');
 
-  static String get BASE_URL =>
-      dotenv.get('API_BASE_URL', fallback: 'http://localhost:8080/api');
+  static String get BASE_URL => dotenv.get('API_BASE_URL', fallback: 'http://192.168.1.233:8080/api/v1');
 
   static String get GOOGLE_SERVER_CLIENT_ID => dotenv.get(
     'GOOGLE_SERVER_CLIENT_ID',

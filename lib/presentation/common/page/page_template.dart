@@ -17,20 +17,11 @@ class PageTemplate extends StatelessWidget {
   final Widget? footer;
   final Widget? floatingActionButton;
 
-  const PageTemplate({
-    super.key,
-    this.header,
-    required this.child,
-    this.footer,
-    this.floatingActionButton,
-  });
+  const PageTemplate({super.key, this.header, required this.child, this.footer, this.floatingActionButton});
 
   @override
   Widget build(BuildContext context) {
-    EdgeInsets padding = const EdgeInsets.symmetric(
-      horizontal: 16.0,
-      vertical: 12.0,
-    );
+    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0);
 
     return Scaffold(
       body: SafeArea(

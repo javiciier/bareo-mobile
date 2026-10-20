@@ -34,9 +34,7 @@ Future<void> main() async {
   final Store<ApplicationRootState> store = initReduxStore();
 
   _logger.info('Starting application');
-  runApp(
-    StoreProvider<ApplicationRootState>(store: store, child: const BareoApp()),
-  );
+  runApp(StoreProvider<ApplicationRootState>(store: store, child: const BareoApp()));
 }
 
 Future<void> setupGlobalConfiguration() async {

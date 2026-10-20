@@ -7,23 +7,32 @@
 
 // Package imports:
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
 
 // Project imports:
-import '../../../app/configuration/dependency_injection.dart';
 import '../../thirdparty/firebase/firebase_service.dart';
 
-FirebaseService firebaseService = DEPENDENCIES_CONTAINER.get<FirebaseService>();
+class RequestTraceabilityInterceptor extends Interceptor {
+  final FirebaseService firebaseService;
 
-// Interceptor that configures the Request headers to enable traceability of user actions
-Interceptor RequestTraceabilityInterceptor = InterceptorsWrapper(
-  onRequest: (options, handler) async {
-    User? currentUser = await firebaseService.getCurrentLoggedInUser();
-    String? firebaseToken = await currentUser?.getIdToken(true);
-    String requestId = const Uuid().v7();
+  RequestTraceabilityInterceptor({required this.firebaseService});
 
-    options.headers['userId'] = firebaseToken;
-    options.headers['X-Request-Id'] = requestId;
-  },
-);
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    try {
+      String requestId = const Uuid().v7();
+      options.headers['X-Request-Id'] = requestId;
+
+      handler.next(options);
+    } catch (e) {
+      handler.reject(
+        DioException(
+          requestOptions: options,
+          error: e,
+          type: DioExceptionType.unknown,
+          message: 'Error obtaining request traceability information',
+        ),
+      );
+    }
+  }
+}

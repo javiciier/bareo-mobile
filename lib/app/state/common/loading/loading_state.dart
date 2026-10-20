@@ -15,14 +15,10 @@ class LoadingState {
 
   const LoadingState({required this.loading, required this.error});
 
-  factory LoadingState.initialState() =>
-      const LoadingState(loading: false, error: null);
+  factory LoadingState.initialState() => const LoadingState(loading: false, error: null);
 
   LoadingState copyWith({bool? loading, Object? error}) {
-    return LoadingState(
-      loading: loading ?? this.loading,
-      error: error ?? this.error,
-    );
+    return LoadingState(loading: loading ?? this.loading, error: error ?? this.error);
   }
 
   @override

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../../app/configuration/dependency_injection.dart';
-import '../../../infrastructure/thirdparty/firebase/firebase_service.dart';
+import '../../../application/usecase/authentication/logout_with_google_use_case.dart';
 import 'page_header_text_template.dart';
 
 class PageHeader extends StatelessWidget {
@@ -20,10 +20,9 @@ class PageHeader extends StatelessWidget {
 
   const PageHeader({super.key, this.actions, this.leading, this.title});
 
-  void _logoutWithGoogle() async {
-    FirebaseService firebaseService = DEPENDENCIES_CONTAINER
-        .get<FirebaseService>();
-    await firebaseService.signOutFromGoogle();
+  void _logout() async {
+    LogoutWithGoogleUseCase logoutUseCase = GET_IT<LogoutWithGoogleUseCase>();
+    await logoutUseCase.execute();
   }
 
   @override
@@ -57,10 +56,7 @@ class PageHeader extends StatelessWidget {
                   children: [
                     ...?actions,
                     // Logout icon at the end
-                    IconButton(
-                      icon: const Icon(Icons.logout),
-                      onPressed: () => _logoutWithGoogle(),
-                    ),
+                    IconButton(icon: const Icon(Icons.logout), onPressed: () => _logout()),
                   ],
                 ),
               ],

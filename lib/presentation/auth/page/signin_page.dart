@@ -14,21 +14,15 @@ import 'package:sign_in_button/sign_in_button.dart';
 // Project imports:
 import '../../../app/configuration/dependency_injection.dart';
 import '../../../app/mixin/logger_mixin.dart';
-import '../../../infrastructure/thirdparty/firebase/firebase_service.dart';
+import '../../../application/usecase/authentication/authenticate_with_google_use_case.dart';
 import '../../common/page/page_template.dart';
 
 class SignInPage extends StatelessWidget with LoggerMixin {
   SignInPage({super.key});
 
   Future<void> _loginWithGoogle() async {
-    FirebaseService firebaseService = DEPENDENCIES_CONTAINER
-        .get<FirebaseService>();
-    final user = await firebaseService.signInwithGoogle();
-    if (user != null) {
-      logger.info('User logged in with Google: ${user.email}');
-    } else {
-      logger.warning('Google sign in failed or was cancelled');
-    }
+    AuthenticateWithGoogleUseCase authenticateUseCase = GET_IT<AuthenticateWithGoogleUseCase>();
+    await authenticateUseCase.execute();
   }
 
   @override

@@ -20,18 +20,11 @@ class ApplicationRootState {
   const ApplicationRootState({required this.loadingState});
 
   /// Default initial application state
-  factory ApplicationRootState.initialState() =>
-      ApplicationRootState(loadingState: LoadingState.initialState());
+  factory ApplicationRootState.initialState() => ApplicationRootState(loadingState: LoadingState.initialState());
 
   ApplicationRootState reducer(ApplicationRootState state, dynamic action) =>
-      ApplicationRootState(
-        loadingState: loadingReducer(state.loadingState, action),
-      );
+      ApplicationRootState(loadingState: loadingReducer(state.loadingState, action));
 }
 
-ApplicationRootState applicationRootStateReducer(
-  ApplicationRootState state,
-  dynamic action,
-) => ApplicationRootState(
-  loadingState: loadingReducer(state.loadingState, action),
-);
+ApplicationRootState applicationRootStateReducer(ApplicationRootState state, dynamic action) =>
+    ApplicationRootState(loadingState: loadingReducer(state.loadingState, action));

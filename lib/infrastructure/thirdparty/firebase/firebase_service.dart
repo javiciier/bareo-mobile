@@ -33,9 +33,7 @@ class FirebaseService with LoggerMixin {
     }
 
     try {
-      await _googleSignIn.initialize(
-        serverClientId: ENV.GOOGLE_SERVER_CLIENT_ID,
-      );
+      await _googleSignIn.initialize(serverClientId: ENV.GOOGLE_SERVER_CLIENT_ID);
       _isGoogleSignInInitialized = true;
     } catch (e) {
       logger.severe('Error initializing Google Sign-In: $e');
@@ -51,7 +49,7 @@ class FirebaseService with LoggerMixin {
   }
 
   /// Sign in user using Google account
-  Future<User?> signInwithGoogle() async {
+  Future<User?> signInWithGoogle() async {
     try {
       await _ensureGoogleSignInInitialized();
 
@@ -72,8 +70,9 @@ class FirebaseService with LoggerMixin {
 
       // Request necesary scopes to obtain the access token
       final authClient = _googleSignIn.authorizationClient;
-      final GoogleSignInClientAuthorization authorization = await authClient
-          .authorizeScopes(ApplicationRequiredScopes.requiredApplicationScopes);
+      final GoogleSignInClientAuthorization authorization = await authClient.authorizeScopes(
+        ApplicationRequiredScopes.requiredApplicationScopes,
+      );
 
       // Create Firebase credential using Google tokens
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -82,8 +81,7 @@ class FirebaseService with LoggerMixin {
       );
 
       // Authenticate with Firebase using the credential
-      final UserCredential userCredential = await _firebaseAuth
-          .signInWithCredential(credential);
+      final UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
 
       return userCredential.user;
     } catch (e, stackTrace) {

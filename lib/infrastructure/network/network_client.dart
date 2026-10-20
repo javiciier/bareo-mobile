@@ -5,6 +5,12 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
+// Dart imports:
+import 'dart:ui';
+
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
 // Package imports:
 import 'package:dio/dio.dart';
 
@@ -17,50 +23,46 @@ import 'interceptors/token_interceptor.dart';
 
 class NetworkClient with LoggerMixin {
   late final Dio _dio;
+  final FirebaseTokenInterceptor tokenInterceptor;
+  final RequestTraceabilityInterceptor requestTraceabilityInterceptor;
 
-  NetworkClient({String? baseUrl}) {
-    _dio =
-        Dio(
-            BaseOptions(
-              baseUrl: baseUrl ?? ENV.BASE_URL,
-              connectTimeout: const Duration(seconds: 15),
-              receiveTimeout: const Duration(seconds: 15),
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-              },
-            ),
-          )
-          ..interceptors.addAll([
-            TokenInterceptor,
-            RequestTraceabilityInterceptor,
-            RequestLoggerInterceptor,
-          ]);
+  NetworkClient({String? baseUrl, required this.tokenInterceptor, required this.requestTraceabilityInterceptor}) {
+    // Configure timeouts for debugging mode
+    final Duration? debuggingTimeout = kDebugMode ? null : const Duration(seconds: 15);
+    final Locale locale = PlatformDispatcher.instance.locale;
+
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: baseUrl ?? ENV.BASE_URL,
+        connectTimeout: debuggingTimeout,
+        receiveTimeout: debuggingTimeout,
+        contentType: 'application/json',
+        responseType: ResponseType.json,
+        headers: {'accept': 'application/json', 'accept-Language': locale.languageCode},
+      ),
+    )..interceptors.addAll([tokenInterceptor, requestTraceabilityInterceptor, RequestLoggerInterceptor]);
   }
 
   Future<void> get(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
     Options? options,
-    Function(dynamic data)? onSuccess,
-    Function(dynamic error)? onError,
+    Function(Map<String, Object?> data)? onSuccess,
+    Function(Map<String, Object?> error)? onError,
   }) async {
     try {
-      final response = await _dio.get(
-        endpoint,
-        queryParameters: queryParameters,
-        options: options,
-      );
+      final response = await _dio.get(endpoint, queryParameters: queryParameters, options: options);
 
-      if (onSuccess != null) {
-        onSuccess(response.data);
+      if (onSuccess != null && response.data != null) {
+        onSuccess(response.data as Map<String, Object?>);
       }
     } on DioException catch (e) {
       final handledError = _handleDioError(e);
       if (onError != null) {
         onError(handledError);
       } else {
-        throw handledError;
+        logger.severe('Unknown error for GET request', e);
+        throw Exception(handledError['message'] ?? 'Unknown error for GET request');
       }
     }
   }
@@ -70,26 +72,22 @@ class NetworkClient with LoggerMixin {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
-    Function(dynamic data)? onSuccess,
-    Function(dynamic error)? onError,
+    Function(Map<String, Object?> data)? onSuccess,
+    Function(Map<String, Object?> error)? onError,
   }) async {
     try {
-      final response = await _dio.post(
-        endpoint,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-      );
+      final response = await _dio.post(endpoint, data: data, queryParameters: queryParameters, options: options);
 
-      if (onSuccess != null) {
-        onSuccess(response.data);
+      if (onSuccess != null && response.data != null) {
+        onSuccess(response.data as Map<String, Object?>);
       }
     } on DioException catch (e) {
       final handledError = _handleDioError(e);
       if (onError != null) {
         onError(handledError);
       } else {
-        throw handledError;
+        logger.severe('Unknown error for POST request', e);
+        throw Exception(handledError['message'] ?? 'Unknown error for POST request');
       }
     }
   }
@@ -99,26 +97,22 @@ class NetworkClient with LoggerMixin {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
-    Function(dynamic data)? onSuccess,
-    Function(dynamic error)? onError,
+    Function(Map<String, Object?> data)? onSuccess,
+    Function(Map<String, Object?> error)? onError,
   }) async {
     try {
-      final response = await _dio.put(
-        endpoint,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-      );
+      final response = await _dio.put(endpoint, data: data, queryParameters: queryParameters, options: options);
 
-      if (onSuccess != null) {
-        onSuccess(response.data);
+      if (onSuccess != null && response.data != null) {
+        onSuccess(response.data as Map<String, Object?>);
       }
     } on DioException catch (e) {
       final handledError = _handleDioError(e);
       if (onError != null) {
         onError(handledError);
       } else {
-        throw handledError;
+        logger.severe('Unknown error for PUT request', e);
+        throw Exception(handledError['message'] ?? 'Unknown error for PUT request');
       }
     }
   }
@@ -127,47 +121,60 @@ class NetworkClient with LoggerMixin {
     String endpoint, {
     Map<String, dynamic>? queryParameters,
     Options? options,
-    Function(dynamic data)? onSuccess,
-    Function(dynamic error)? onError,
+    Function(Map<String, Object?> data)? onSuccess,
+    Function(Map<String, Object?> error)? onError,
   }) async {
     try {
-      final response = await _dio.delete(
-        endpoint,
-        queryParameters: queryParameters,
-        options: options,
-      );
+      final response = await _dio.delete(endpoint, queryParameters: queryParameters, options: options);
 
-      if (onSuccess != null) {
-        onSuccess(response.data);
+      if (onSuccess != null && response.data != null) {
+        onSuccess(response.data as Map<String, Object?>);
       }
     } on DioException catch (e) {
       final handledError = _handleDioError(e);
       if (onError != null) {
         onError(handledError);
       } else {
-        throw handledError;
+        logger.severe('Unknown error for DELETE request', e);
+        throw Exception(handledError['message'] ?? 'Unknown error for DELETE request');
       }
     }
   }
 
-  Exception _handleDioError(DioException error) {
+  Map<String, Object?> _handleDioError(DioException error) {
+    final statusCode = error.response?.statusCode;
+    final requestPath = error.requestOptions.path;
+    final method = error.requestOptions.method;
+    final response = error.response?.data;
+
+    logger.severe('Error for request $method $requestPath [$statusCode]: ${error.message}');
+
+    if (response is Map<String, Object?>) {
+      return response;
+    }
+
+    String errorMessage;
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return Exception('Connection timeout.');
-      case DioExceptionType.badResponse:
-        final statusCode = error.response?.statusCode;
-        final data = error.response?.data;
-        return Exception('Server error [$statusCode]: $data');
+        errorMessage = 'Connection timeout.';
+        break;
       case DioExceptionType.cancel:
-        return Exception('Request canceled.');
+        errorMessage = 'Request canceled.';
+        break;
+      case DioExceptionType.badResponse:
+        errorMessage = response?.toString() ?? 'Server error [$statusCode]';
+        break;
+      case DioExceptionType.connectionError:
+        errorMessage = 'No internet connection.';
+        break;
       case DioExceptionType.unknown:
       default:
-        final statusCode = error.response?.statusCode;
-        return Exception(
-          'Unexpected network error: [$statusCode] ${error.message}',
-        );
+        errorMessage = error.message ?? 'Unexpected network error.';
+        break;
     }
+
+    return {'error': true, 'statusCode': statusCode ?? 0, 'message': errorMessage, 'type': error.type.name};
   }
 }
