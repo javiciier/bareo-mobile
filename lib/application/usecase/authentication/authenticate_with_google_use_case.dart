@@ -5,6 +5,9 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
+// Project imports:
+import '../../../infrastructure/dto/user/response/user_summary_response.dart';
+
 abstract interface class AuthenticateWithGoogleUseCase {
-  Future<void> execute();
+  Future<UserSummaryResponse?> execute();
 }

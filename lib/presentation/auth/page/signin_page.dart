@@ -20,9 +20,14 @@ import '../../common/page/page_template.dart';
 class SignInPage extends StatelessWidget with LoggerMixin {
   SignInPage({super.key});
 
-  Future<void> _loginWithGoogle() async {
-    AuthenticateWithGoogleUseCase authenticateUseCase = GET_IT<AuthenticateWithGoogleUseCase>();
-    await authenticateUseCase.execute();
+  Future<void> _loginWithGoogle(BuildContext context) async {
+    try {
+      AuthenticateWithGoogleUseCase authenticateUseCase = GET_IT<AuthenticateWithGoogleUseCase>();
+      await authenticateUseCase.execute();
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString()), duration: const Duration(seconds: 4)));
+    }
   }
 
   @override
@@ -35,7 +40,7 @@ class SignInPage extends StatelessWidget with LoggerMixin {
             child: SignInButton(
               Buttons.google,
               onPressed: () {
-                _loginWithGoogle();
+                _loginWithGoogle(context);
               },
             ),
           ),

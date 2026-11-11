@@ -9,10 +9,12 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import '../../../app/mixin/logger_mixin.dart';
+import '../../../app/state/application_root_state.dart';
+import '../../../app/state/authentication/authentication_store_view_model.dart';
 import '../../home/page/home_page.dart';
 import 'signin_page.dart';
 
@@ -30,19 +32,17 @@ class _AuthPageState extends State<AuthPage> with LoggerMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: StoreConnector<ApplicationRootState, AuthenticationStoreViewModel>(
+        converter: (store) => AuthenticationStoreViewModel.fromStore(store),
+        builder: (BuildContext context, AuthenticationStoreViewModel vm) {
+          if (vm.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          // User is logged in
-          if (snapshot.hasData && snapshot.data != null) {
+          if (vm.isAuthenticated) {
             return const HomePage();
           }
 
-          // No user is logged in: go to sign in page
           return SignInPage();
         },
       ),

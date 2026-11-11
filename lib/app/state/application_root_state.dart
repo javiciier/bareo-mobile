@@ -9,6 +9,8 @@
 import 'package:flutter/foundation.dart';
 
 // Project imports:
+import 'authentication/authentication_reducer.dart';
+import 'authentication/authentication_state.dart';
 import 'common/loading/loading_reducer.dart';
 import 'common/loading/loading_state.dart';
 
@@ -16,15 +18,18 @@ import 'common/loading/loading_state.dart';
 class ApplicationRootState {
   // Global app state goes here
   final LoadingState loadingState;
+  final AuthenticationState authenticationState;
 
-  const ApplicationRootState({required this.loadingState});
+  const ApplicationRootState({required this.loadingState, required this.authenticationState});
 
   /// Default initial application state
-  factory ApplicationRootState.initialState() => ApplicationRootState(loadingState: LoadingState.initialState());
+  factory ApplicationRootState.initialState() => ApplicationRootState(
+    loadingState: LoadingState.initialState(),
+    authenticationState: AuthenticationState.initialState(),
+  );
 
-  ApplicationRootState reducer(ApplicationRootState state, dynamic action) =>
-      ApplicationRootState(loadingState: loadingReducer(state.loadingState, action));
+  static ApplicationRootState rootStateReducer(ApplicationRootState state, dynamic action) => ApplicationRootState(
+    loadingState: loadingReducer(state.loadingState, action),
+    authenticationState: authenticationReducer(state.authenticationState, action),
+  );
 }
-
-ApplicationRootState applicationRootStateReducer(ApplicationRootState state, dynamic action) =>
-    ApplicationRootState(loadingState: loadingReducer(state.loadingState, action));

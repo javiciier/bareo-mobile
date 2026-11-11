@@ -16,7 +16,7 @@ import 'middleware/redux_logger_middleware.dart';
 
 Store<ApplicationRootState> initReduxStore() {
   return Store<ApplicationRootState>(
-    applicationRootStateReducer,
+    ApplicationRootState.rootStateReducer,
     initialState: ApplicationRootState.initialState(),
     middleware: configureMiddlewares(),
   );

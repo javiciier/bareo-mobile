@@ -12,7 +12,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // Project imports:
 import '../../app/mixin/logger_mixin.dart';
 import '../../application/service/authentication/authentication_service.dart';
+import '../dto/api_error_response.dart';
 import '../dto/auth/response/authenticated_user_response.dart';
+import '../dto/user/response/user_summary_response.dart';
 import '../network/network_client.dart';
 import '../thirdparty/firebase/firebase_service.dart';
 
@@ -27,26 +29,34 @@ class GoogleAuthenticationServiceImpl with LoggerMixin implements Authentication
   GoogleAuthenticationServiceImpl({required this.firebaseService, required this.networkClient});
 
   @override
-  Future<void> authenticate() async {
+  Future<UserSummaryResponse?> authenticate() async {
     // Sign in with google
     User? user = await firebaseService.signInWithGoogle();
     String? token = await user?.getIdToken(true);
 
     // Authenticate on backend
+    UserSummaryResponse? result;
     void onSuccessCallback(Map<String, Object?> response) {
       AuthenticatedUserResponse authenticatedUserResponse = AuthenticatedUserResponse.fromJson(response);
       _secureStorage.write(key: FIREBASE_TOKEN_STORAGE_KEY, value: authenticatedUserResponse.token);
       logger.fine('Authentication on backend successful');
+
+      result = authenticatedUserResponse.user;
     }
 
     void onErrorCallback(Map<String, Object?> response) {
-      _secureStorage.delete(key: FIREBASE_TOKEN_STORAGE_KEY);
+      ApiErrorResponse errorResponse = ApiErrorResponse.fromJson(response);
       logger.severe('Authentication on backend failed. Forcing logout...');
+      _secureStorage.delete(key: FIREBASE_TOKEN_STORAGE_KEY);
       logout();
+
+      throw Exception(errorResponse.message);
     }
 
     Map<String, String?> body = {'idToken': token};
     await networkClient.post(BASE_ENDPOINT, data: body, onSuccess: onSuccessCallback, onError: onErrorCallback);
+
+    return result;
   }
 
   @override
@@ -57,12 +67,15 @@ class GoogleAuthenticationServiceImpl with LoggerMixin implements Authentication
     void onSuccessCallback(Map<String, Object?> response) {
       firebaseService.signOutFromGoogle();
       _secureStorage.delete(key: FIREBASE_TOKEN_STORAGE_KEY);
+      logger.fine('Logged out succesfully');
     }
 
     void onErrorCallback(Map<String, Object?> response) {
       firebaseService.signOutFromGoogle();
       _secureStorage.delete(key: FIREBASE_TOKEN_STORAGE_KEY);
-      logger.fine('Logged out succesfully');
+      ApiErrorResponse errorResponse = ApiErrorResponse.fromJson(response);
+      logger.severe('An error ocurred during logout: ${errorResponse.message}');
+      throw Exception(errorResponse.message);
     }
 
     await networkClient.post(endpoint, onSuccess: onSuccessCallback, onError: onErrorCallback);

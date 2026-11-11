@@ -5,8 +5,11 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
+// Project imports:
+import '../../../infrastructure/dto/user/response/user_summary_response.dart';
+
 abstract interface class AuthenticationService {
-  Future<void> authenticate();
+  Future<UserSummaryResponse?> authenticate();
 
   Future<void> logout();
 }

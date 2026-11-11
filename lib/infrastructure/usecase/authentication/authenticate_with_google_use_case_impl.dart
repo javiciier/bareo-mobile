@@ -9,6 +9,7 @@
 import '../../../app/mixin/logger_mixin.dart';
 import '../../../application/service/authentication/authentication_service.dart';
 import '../../../application/usecase/authentication/authenticate_with_google_use_case.dart';
+import '../../dto/user/response/user_summary_response.dart';
 
 class AuthenticateWithGoogleUseCaseImpl with LoggerMixin implements AuthenticateWithGoogleUseCase {
   final AuthenticationService authService;
@@ -16,11 +17,13 @@ class AuthenticateWithGoogleUseCaseImpl with LoggerMixin implements Authenticate
   AuthenticateWithGoogleUseCaseImpl({required this.authService});
 
   @override
-  Future<void> execute() async {
+  Future<UserSummaryResponse?> execute() async {
     try {
-      await authService.authenticate();
+      return await authService.authenticate();
     } catch (e) {
-      logger.severe('Error authenticating with Google', e);
+      logger.severe('Unable to authenticate with Google', e);
+
+      throw Exception('Unable to authenticate with Google');
     }
   }
 }
