@@ -5,8 +5,8 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
-// Flutter imports:
-import 'package:flutter/material.dart';
+// Package imports:
+import 'package:material_ui/material_ui.dart';
 
 ThemeData buildApplicationTheme() {
   return ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true);

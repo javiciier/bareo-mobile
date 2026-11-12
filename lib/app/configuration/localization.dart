@@ -5,11 +5,8 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
-// Flutter imports:
-import 'package:flutter/widgets.dart';
-
 // Package imports:
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart';
 
 // Project imports:
 import '../l10n/localizations.dart';
@@ -21,6 +18,6 @@ class LocalizationConfiguration {
 
   static const Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates = [
     AppLocalizations.delegate,
-    ...GlobalMaterialLocalizations.delegates,
+    GlobalMaterialLocalizations.delegate,
   ];
 }

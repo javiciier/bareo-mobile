@@ -5,14 +5,12 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -39,7 +37,7 @@ Future<void> main() async {
 
 Future<void> setupGlobalConfiguration() async {
   _logger.config('Setting up global application configuration');
-  await dotenv.load();
+  await dotenv.load(fileName: '.env');
   setupLoggers();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

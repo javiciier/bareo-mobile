@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: a954052ffb2829f1f2cd16900658724952f7f48d053941a5c78dd12c19d7b9b9
+      sha256: e6d8a6eb9da10e65906dda455eca96ee7a6303b835cad74d667b1ff3bedd5d18
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.78"
+    version: "1.3.79"
   args:
     dependency: transitive
     description:
@@ -61,10 +61,10 @@ packages:
     dependency: transitive
     description:
       name: code_assets
-      sha256: "828110d598123b5ea96c00c9f3c72105bf79f8ee36c20a39b26209ade421ec57"
+      sha256: "1ef22a0be3af9370bd9481ac76db114db92bfe75d5ca2b2d7bc911764478a4d9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   collection:
     dependency: transitive
     description:
@@ -89,14 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.8"
-  cupertino_icons:
-    dependency: "direct main"
+  cupertino_ui:
+    dependency: transitive
     description:
-      name: cupertino_icons
-      sha256: b7cc2390aac296c083bea762859413eb1cf5b630c70e0c7e4d831018f762a8b2
+      name: cupertino_ui
+      sha256: "369e39a1c5c030a6212589c3da1809920b1c2cfade7b02aade7695bfa4b88c3a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "1.1.6"
   dio:
     dependency: "direct main"
     description:
@@ -149,34 +149,34 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_auth
-      sha256: "76ddb00b0e74fbaf508b283a8da7f473ef5f7305bd63b792dc7c8891d1ba034f"
+      sha256: eda4742142eb926b6081d2063b86979aaaa2f9b9ca525fc3dc3e0fc004d8e1ab
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.0"
+    version: "7.0.1"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
-      sha256: f7eab35271d4c3594137f10665cf98e9b401921145272f14973a5a4a92183946
+      sha256: "8903c6c17828851daee5fbef05c8498f91e57828e30d68c6425fa7822169346f"
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.1"
+    version: "9.1.2"
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
-      sha256: "68b9c91ccb7557ab10f1a74035227f2a1627a04deebfe9eedf33054a9446ab3c"
+      sha256: "6b06ea797dc45eaa26d4cbd8a5a559b27df264bf5a911a8fde5d35db2348b3d4"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.1"
+    version: "6.3.2"
   firebase_core:
     dependency: "direct main"
     description:
       name: firebase_core
-      sha256: "7d4306a9ac6eaed45df40c63f81275bf46dc65083947b8c1665c8d7c04a74743"
+      sha256: "21551c1205441d9d155660ea0a409530b65a8d66ce88002bab3f38d94a8638fc"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "5.1.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -329,18 +329,18 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_android
-      sha256: "312e74b3e839896ff30ed98310da4cc24dbfa19ad060b1612f7718d5afa66480"
+      sha256: af51a005b7c3c3f54cb5e7d04dd5db96f081e6f92b36468c60d14726a047f918
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.18"
+    version: "7.2.19"
   google_sign_in_ios:
     dependency: transitive
     description:
       name: google_sign_in_ios
-      sha256: b8efb315c778390f1b1c4fc14d74c42784dd9ee0c1d0c26b13f30b46826319ad
+      sha256: bc03e8f8cf0e5a5cbbc1d582516e5f792c734f0a41d324d4760dcb8bef523b28
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.8"
+    version: "6.4.0"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
@@ -361,10 +361,10 @@ packages:
     dependency: "direct main"
     description:
       name: googleapis
-      sha256: d38bb64016ef27eca7fde992994b9d2999bcea307685807e15d6a08bff05dc61
+      sha256: "48200d0b604fc49ed87053bd8c42711a110e958dd80d52db03cbe723f8fb44dc"
       url: "https://pub.dev"
     source: hosted
-    version: "17.0.0"
+    version: "19.0.0"
   hooks:
     dependency: transitive
     description:
@@ -409,10 +409,10 @@ packages:
     dependency: transitive
     description:
       name: jni
-      sha256: d8df6dab6847855512fe44dd9032b0bbe34dda7bf7597e41d30750879779813f
+      sha256: "2e91e6087291affd10b31b6c872f3e3ac7dc5d93b51b5ba485d930c8f08bde6c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   jni_flutter:
     dependency: transitive
     description:
@@ -461,6 +461,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  listen:
+    dependency: transitive
+    description:
+      name: listen
+      sha256: "47501a08016a43fcad79252439d723f50f14f88fa7bfd8a177e0a417e5c9e1f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   logging:
     dependency: "direct main"
     description:
@@ -485,6 +493,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.0"
+  material_ui:
+    dependency: "direct main"
+    description:
+      name: material_ui
+      sha256: "474c135fd46b56ff1d35ca982155e8863d28fbc6464d1192acf4ee53a738680e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.11.0"
   meta:
     dependency: transitive
     description:
@@ -505,10 +521,10 @@ packages:
     dependency: transitive
     description:
       name: objective_c
-      sha256: "5c80c2ad6e2c0397de5db38c6d653e69616a3397e13aa7633bf39eb668f2041b"
+      sha256: c965d264fd4b0b4dd402dce9d049b70656bf98d3ca108b9bc55d2544ceadbe5e
       url: "https://pub.dev"
     source: hosted
-    version: "9.6.2"
+    version: "9.6.4"
   package_config:
     dependency: transitive
     description:
@@ -694,10 +710,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "2a122cbe059f8b610d3a5415f42e255b6c17b1f21eee1d960f31080237fb4f11"
+      sha256: "0a10344e901e5b2e63819567951cb6a06673ed6b84f40462188ff5a0c41f371f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.12"
+    version: "0.7.14"
   tint:
     dependency: transitive
     description:
@@ -771,5 +787,5 @@ packages:
     source: hosted
     version: "3.1.4"
 sdks:
-  dart: ">=3.13.1 <4.0.0"
-  flutter: ">=3.44.0"
+  dart: ">=3.14.0 <4.0.0"
+  flutter: ">=3.47.0"

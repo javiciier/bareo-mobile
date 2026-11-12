@@ -5,11 +5,9 @@
  * Unauthorized copying, distribution, or use is strictly prohibited.
  */
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:material_ui/material_ui.dart';
 
 // Project imports:
 import '../../../app/configuration/environment.dart';
